@@ -23,7 +23,7 @@ function keyPressed() {
 }
 
 function setup() {
-  let canvas = createCanvas(windowWidth, windowHeight);
+  let canvas = createCanvas(window.innerWidth, window.innerHeight);
   video = createCapture(VIDEO);
   
   video.hide();
@@ -44,15 +44,16 @@ function setup() {
 
 function gotPoses(poses) {
   //console.log(poses);
-  mulFacHeight = windowHeight/480;
-  factor = -(windowWidth - video.width)/2;
+  mulFacHeight = window.innerHeight/480;
+  factor = -(window.innerWidth - video.width);
+  mul = window.innerWidth/640;
   if (poses.length > 0) {
     pose = poses[0].pose;
     skeleton = poses[0].skeleton;
     if(state == 'collecting') {
         let inputs = [];
         for(let i = 0; i < pose.keypoints.length; i++) {
-            let x = pose.keypoints[i].position.x + factor;
+            let x = pose.keypoints[i].position.x * mul + factor;
             let y = pose.keypoints[i].position.y * mulFacHeight;
             inputs.push(x);
             inputs.push(y);
@@ -70,27 +71,24 @@ function modelLoaded() {
 function draw() {
   push();
   background(220);
-  /*translate(video.width, 0);
-  scale(-1, 1);
-  image(video, -7*(screen.width-2* video.width)/2, 0, screen.width, windowHeight);
-  image(video, -(windowWidth - video.width), 0, windowWidth, windowHeight);*/
   translate(video.width, 0);
   scale(-1, 1);
-  factor = -(windowWidth - video.width)/2;
-  mulFacHeight = windowHeight/480;
-  console.log(-windowWidth + video.width);
-  image(video, 2 * factor, 0, windowWidth, windowHeight);//-(windowWidth - video.width), 0);
-
+  factor = -(window.innerWidth - video.width);
+  mulFacHeight = window.innerHeight/480;
+  image(video, factor, 0, window.innerWidth, window.innerHeight);
+  mul = window.innerWidth/640;
   if (pose) {
     let eyeR = pose.rightEye;
     let eyeL = pose.leftEye;
-    let d = dist(eyeR.x + factor, eyeR.y * mulFacHeight, eyeL.x + factor, eyeL.y * mulFacHeight);
+    let d = dist(eyeR.x * mul + factor, eyeR.y * mulFacHeight, eyeL.x * mul + factor, eyeL.y * mulFacHeight);
     fill(0, 255, 0);
-    ellipse(pose.rightWrist.x + factor, pose.rightWrist.y * mulFacHeight, 32);
-    ellipse(pose.leftWrist.x + factor, pose.leftWrist.y * mulFacHeight, 32);
+    ellipse(pose.rightWrist.x * mul + factor, pose.rightWrist.y * mulFacHeight, 32);
+    ellipse(pose.leftWrist.x * mul + factor, pose.leftWrist.y * mulFacHeight, 32);
+    ellipse(pose.rightElbow.x * mul + factor, pose.rightElbow.y * mulFacHeight, 32);
+    ellipse(pose.leftElbow.x * mul + factor, pose.leftElbow.y * mulFacHeight, 32);
     
     for (let i = 0; i < pose.keypoints.length; i++) {
-      let x = pose.keypoints[i].position.x + factor;
+      let x = pose.keypoints[i].position.x * mul + factor;
       let y = pose.keypoints[i].position.y * mulFacHeight;
       fill(255, 0, 0);
       ellipse(x,y,16,16);
@@ -101,8 +99,9 @@ function draw() {
       let b = skeleton[i][1];
       strokeWeight(2);
       stroke(255);
-      line(a.position.x + factor, a.position.y * mulFacHeight,b.position.x + factor,b.position.y * mulFacHeight);      
+      line(a.position.x * mul + factor, a.position.y * mulFacHeight,b.position.x * mul + factor,b.position.y * mulFacHeight);      
     }
+    //console.log(window.innerHeight + "  " + window.innerHeight + "  " + window.innerHeight);
   }
   pop();
 }
