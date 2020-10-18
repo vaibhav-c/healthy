@@ -103,7 +103,8 @@ function draw() {
   fill(255, 0, 255);
   noStroke();
   textSize(128);
-  textAlign(CENTER, CENTER);                if(poseLabel == 'A') {
+  textAlign(CENTER, CENTER);                
+    if(poseLabel == 'A') {
         fill(0, 255, 0);
         text('GOOD WORK', width / 2, height / 2);
     } else if(poseLabel == 'B') {

@@ -17,7 +17,7 @@ function keyPressed() {
             setTimeout(function() {
                 console.log('not collecting');
                 state = 'waiting';
-            }, 10000);
+            }, 30000);
         }, 5000);
     }
 }
@@ -101,6 +101,7 @@ function draw() {
       stroke(255);
       line(a.position.x * mul + factor, a.position.y * mulFacHeight,b.position.x * mul + factor,b.position.y * mulFacHeight);      
     }
+    //console.log(window.innerHeight + "  " + windowHeight + "  " + screen.height);
   }
   pop();
 }

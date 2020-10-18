@@ -15,7 +15,7 @@ function keyPressed() {
             console.log('Start Now');
             state = 'collecting';
             setTimeout(function() {
-                console.log('Finsih Now');
+                console.log('Finish Now');
                 state = 'waiting';
             }, 10000);
         }, 5000);
@@ -25,7 +25,7 @@ function keyPressed() {
 function setup() {
   let canvas = createCanvas(windowWidth, windowHeight);
   video = createCapture(VIDEO);
-  fullscreen(true);
+  
   video.hide();
   poseNet = ml5.poseNet(video, modelLoaded);
   poseNet.on('pose', gotPoses);
