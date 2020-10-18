@@ -25,7 +25,7 @@ function keyPressed() {
 function setup() {
   let canvas = createCanvas(windowWidth, windowHeight);
   video = createCapture(VIDEO);
-  
+  fullscreen(true);
   video.hide();
   poseNet = ml5.poseNet(video, modelLoaded);
   poseNet.on('pose', gotPoses);
