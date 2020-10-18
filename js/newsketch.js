@@ -12,10 +12,10 @@ function keyPressed() {
         targetLabel = key;
         console.log(targetLabel);
         setTimeout(function() {
-            console.log('collecting');
+            console.log('Start Now');
             state = 'collecting';
             setTimeout(function() {
-                console.log('not collecting');
+                console.log('Finsih Now');
                 state = 'waiting';
             }, 10000);
         }, 5000);
@@ -81,27 +81,35 @@ function draw() {
     let eyeR = pose.rightEye;
     let eyeL = pose.leftEye;
     let d = dist(eyeR.x * mul + factor, eyeR.y * mulFacHeight, eyeL.x * mul + factor, eyeL.y * mulFacHeight);
-    fill(0, 255, 0);
-    ellipse(pose.rightWrist.x * mul + factor, pose.rightWrist.y * mulFacHeight, 32);
-    ellipse(pose.leftWrist.x * mul + factor, pose.leftWrist.y * mulFacHeight, 32);
-    ellipse(pose.rightElbow.x * mul + factor, pose.rightElbow.y * mulFacHeight, 32);
-    ellipse(pose.leftElbow.x * mul + factor, pose.leftElbow.y * mulFacHeight, 32);
-    
+    fill(255, 255, 255);
+    ellipse(eyeR.x * mul + factor, eyeR.y * mulFacHeight, 96, 40);
+    ellipse(eyeL.x * mul + factor, eyeL.y * mulFacHeight, 96, 40);
     for (let i = 0; i < pose.keypoints.length; i++) {
-      let x = pose.keypoints[i].position.x * mul + factor;
-      let y = pose.keypoints[i].position.y * mulFacHeight;
-      fill(255, 0, 0);
-      ellipse(x,y,16,16);
+      if(pose.keypoints[i].part == "leftEye" || pose.keypoints[i].part == "rightEye" ) {
+        let x = pose.keypoints[i].position.x * mul + factor;
+        let y = pose.keypoints[i].position.y * mulFacHeight;
+        fill(0, 0, 0);
+        ellipse(x,y,32,32);   
+      } else if(pose.keypoints[i].part != "leftEar" && pose.keypoints[i].part != "rightEar" && pose.keypoints[i].part != "nose") {
+        let x = pose.keypoints[i].position.x * mul + factor;
+        let y = pose.keypoints[i].position.y * mulFacHeight;
+        fill(255, 255, 0);
+        ellipse(x,y,64,64);  
+      } else if(pose.keypoints[i].part == "nose") {
+        let x = pose.keypoints[i].position.x * mul + factor;
+        let y = pose.keypoints[i].position.y * mulFacHeight;
+        fill(255, 255, 0);
+        ellipse(x,y,16,16);
+      }
     }
     
     for (let i = 0; i < skeleton.length; i++) {
       let a = skeleton[i][0];
       let b = skeleton[i][1];
-      strokeWeight(2);
-      stroke(255);
+      strokeWeight(5);
+      stroke(0);
       line(a.position.x * mul + factor, a.position.y * mulFacHeight,b.position.x * mul + factor,b.position.y * mulFacHeight);      
     }
-    //console.log(windowHeight + "  " + windowHeight + "  " + windowHeight);
   }
   pop();
 }
