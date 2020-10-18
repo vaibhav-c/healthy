@@ -1612,7 +1612,7 @@
      text-align: center;
 }
  
- .send-btn {
+.send-btn {
      font-size: 26px;
      border: #000000 solid 2px;
      padding: 16px 70px;
@@ -1621,7 +1621,8 @@
      border-radius: 40px;
      margin: 0 auto;
 }
- .send-btn:hover {
+
+.send-btn:hover {
      background-color: #BC0343;
      border: #BC0343 solid 2px;
      color: #fff;
@@ -1646,4 +1647,22 @@
      margin: 0 auto;
      padding: 25px 0;
      font-weight: bold;
-} 
+}
+ .footer .foothead a{
+     font-size: 26px;
+     border: #000000 solid 2px;
+     padding: 2px 40px;
+     background-color: #000000;
+     color: #fff;
+     border-radius: 40px;
+     margin-top:  20px;
+     text-align: center;
+     
+   
+}
+
+.footer .foothead a:hover {
+     background-color: #BC0343;
+     border: #BC0343 solid 2px;
+     color: #fff;
+}

@@ -5,7 +5,22 @@ let skeleton;
 let brain;
 let state='waiting';
 let targetLabel;
-
+function keyPressed() {
+    if(key == 's') {
+        brain.saveData();
+    } else {
+        targetLabel = key;
+        console.log(targetLabel);
+        setTimeout(function() {
+            console.log('Start Now');
+            state = 'collecting';
+            setTimeout(function() {
+                console.log('Finish Now');
+                state = 'waiting';
+            }, 10000);
+        }, 5000);
+    }
+}
 
 function setup() {
   let canvas = createCanvas(windowWidth, windowHeight);
@@ -14,6 +29,16 @@ function setup() {
   video.hide();
   poseNet = ml5.poseNet(video, modelLoaded);
   poseNet.on('pose', gotPoses);
+    
+    let options = {
+        inputs: 34,
+        outputs: 2,
+        task:'classification',
+        debug:true
+    }
+    brain = ml5.neuralNetwork(options);
+    //brain.loadData('abcd.json', dataReady);
+    
 
 }
 
@@ -49,22 +74,22 @@ function draw() {
   translate(video.width, 0);
   scale(-1, 1);
   factor = -(windowWidth - video.width);
-  mulFacHeight = 1;
+  mulFacHeight = windowHeight/480;
   image(video, factor, 0, windowWidth, windowHeight);
-  mul = 1;
+  mul = windowWidth/640;
   if (pose) {
     let eyeR = pose.rightEye;
     let eyeL = pose.leftEye;
     let d = dist(eyeR.x * mul + factor, eyeR.y * mulFacHeight, eyeL.x * mul + factor, eyeL.y * mulFacHeight);
     fill(255, 255, 255);
-    ellipse(eyeR.x * mul + factor, eyeR.y * mulFacHeight, 40);
-    ellipse(eyeL.x * mul + factor, eyeL.y * mulFacHeight, 40);
+    ellipse(eyeR.x * mul + factor, eyeR.y * mulFacHeight, 50);
+    ellipse(eyeL.x * mul + factor, eyeL.y * mulFacHeight, 50);
     for (let i = 0; i < pose.keypoints.length; i++) {
       if(pose.keypoints[i].part == "leftEye" || pose.keypoints[i].part == "rightEye" ) {
         let x = pose.keypoints[i].position.x * mul + factor;
         let y = pose.keypoints[i].position.y * mulFacHeight;
         fill(0, 0, 0);
-        ellipse(x,y,16,16);   
+        ellipse(x,y,20,20);   
       } else if(pose.keypoints[i].part != "leftEar" && pose.keypoints[i].part != "rightEar" && pose.keypoints[i].part != "nose") {
         let x = pose.keypoints[i].position.x * mul + factor;
         let y = pose.keypoints[i].position.y * mulFacHeight;
@@ -76,7 +101,7 @@ function draw() {
     for (let i = 0; i < skeleton.length; i++) {
       let a = skeleton[i][0];
       let b = skeleton[i][1];
-      strokeWeight(20);
+      strokeWeight(30);
       stroke(0);
       line(a.position.x * mul + factor, a.position.y * mulFacHeight,b.position.x * mul + factor,b.position.y * mulFacHeight);      
     }
