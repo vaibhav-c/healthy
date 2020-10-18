@@ -23,7 +23,7 @@ function keyPressed() {
 }
 
 function setup() {
-  let canvas = createCanvas(window.innerWidth, window.innerHeight);
+  let canvas = createCanvas(windowWidth, windowHeight);
   video = createCapture(VIDEO);
   
   video.hide();
@@ -44,9 +44,9 @@ function setup() {
 
 function gotPoses(poses) {
   //console.log(poses);
-  mulFacHeight = window.innerHeight/480;
-  factor = -(window.innerWidth - video.width);
-  mul = window.innerWidth/640;
+  mulFacHeight = windowHeight/480;
+  factor = -(windowWidth - video.width);
+  mul = windowWidth/640;
   if (poses.length > 0) {
     pose = poses[0].pose;
     skeleton = poses[0].skeleton;
@@ -73,10 +73,10 @@ function draw() {
   background(220);
   translate(video.width, 0);
   scale(-1, 1);
-  factor = -(window.innerWidth - video.width);
-  mulFacHeight = window.innerHeight/480;
-  image(video, factor, 0, window.innerWidth, window.innerHeight);
-  mul = window.innerWidth/640;
+  factor = -(windowWidth - video.width);
+  mulFacHeight = windowHeight/480;
+  image(video, factor, 0, windowWidth, windowHeight);
+  mul = windowWidth/640;
   if (pose) {
     let eyeR = pose.rightEye;
     let eyeL = pose.leftEye;
@@ -101,7 +101,7 @@ function draw() {
       stroke(255);
       line(a.position.x * mul + factor, a.position.y * mulFacHeight,b.position.x * mul + factor,b.position.y * mulFacHeight);      
     }
-    //console.log(window.innerHeight + "  " + window.innerHeight + "  " + window.innerHeight);
+    //console.log(windowHeight + "  " + windowHeight + "  " + windowHeight);
   }
   pop();
 }
