@@ -82,8 +82,8 @@ function draw() {
     let eyeL = pose.leftEye;
     let d = dist(eyeR.x * mul + factor, eyeR.y * mulFacHeight, eyeL.x * mul + factor, eyeL.y * mulFacHeight);
     fill(255, 255, 255);
-    ellipse(eyeR.x * mul + factor, eyeR.y * mulFacHeight, 96, 40);
-    ellipse(eyeL.x * mul + factor, eyeL.y * mulFacHeight, 96, 40);
+    ellipse(eyeR.x * mul + factor, eyeR.y * mulFacHeight, 80, 40);
+    ellipse(eyeL.x * mul + factor, eyeL.y * mulFacHeight, 80, 40);
     for (let i = 0; i < pose.keypoints.length; i++) {
       if(pose.keypoints[i].part == "leftEye" || pose.keypoints[i].part == "rightEye" ) {
         let x = pose.keypoints[i].position.x * mul + factor;
